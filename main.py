@@ -8,7 +8,7 @@ from torch.utils.data import DataLoader
 
 # For the CLI
 import argparse
-import config
+from . import config
 
 
 def train():

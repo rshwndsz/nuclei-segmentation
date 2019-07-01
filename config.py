@@ -1,6 +1,6 @@
 # Config file
 from torch import nn, cuda, optim
-from models import SampleNet
+from .models import UNet
 
 # Hyper-parameters
 batch_size = 128
@@ -11,15 +11,16 @@ weight_decay = 1e-4
 
 # Architecture
 model_name = 'SampleNet'
-model = SampleNet()  # name of the model
+model = UNet()  # name of the model
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(),
                        lr=lr,
                        weight_decay=weight_decay)
 
 # Dataset
-train_data_root = './dataset/train'
-test_data_root = './dataset/test'
+train_data_root = 'dataset/train'
+test_data_root = 'dataset/test'
+val_data_root = 'dataset/kidney/val'
 load_model_path = 'checkpoints/model.pth'
 
 # torch specific parameters

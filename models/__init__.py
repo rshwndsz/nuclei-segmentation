@@ -1,1 +1,1 @@
-from .SampleNet import SampleNet
+from .UNet import UNet

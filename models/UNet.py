@@ -1,9 +1,9 @@
 from torch import nn
 
 
-class SampleNet(nn.Module):
+class UNet(nn.Module):
     def __init__(self):
-        super(SampleNet, self).__init__()
+        super(UNet, self).__init__()
         pass
 
     def forward(self, x):

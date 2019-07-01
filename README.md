@@ -1,4 +1,4 @@
-# My cool new model
+# U-Net
 
 ## Abstract
 
@@ -8,11 +8,7 @@ This is what the model uses & what it does.
 
 ```shell
 cd dl-model-template
-python3 -m venv ./venv
-source ./venv/bin/activate
-pip install --upgrade pip
-pip install -r requirements.txt
-mkdir dataset
+conda env create -f unet.yml
 ```
 
 Add your data into `dataset/`.
@@ -37,10 +33,8 @@ python main.py --phase test --in_path xxx/xxx.jpg  --out_path ./results/
 
 ## Results
 
-This is what my cool new model achieved in testing.
-Here are some graphs and tables.
+TODO
 
 ## References
 
-* [Some awesome paper](www.github.com/rshwndsz)
-* [Great blog](www.github.com/rshwndsz)
+* [U-Net: Convolutional Networks for Biomedical Image Segmentation by Olaf Ronneberger, Philipp Fischer, Thomas Brox](https://arxiv.org/abs/1505.04597)

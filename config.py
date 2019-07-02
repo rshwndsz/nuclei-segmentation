@@ -1,29 +1,33 @@
-# Config file
-from torch import nn, cuda, optim
-from .models import UNet
+import os
+import torch
+import torch.nn as nn
+import torch.optim as optim
 
-# Hyper-parameters
-batch_size = 128
-max_epoch = 2
-lr = 0.01
-lr_decay = 0.95
-weight_decay = 1e-4
-
-# Architecture
-model_name = 'SampleNet'
-model = UNet()  # name of the model
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(),
-                       lr=lr,
-                       weight_decay=weight_decay)
-
-# Dataset
-train_data_root = 'dataset/train'
-test_data_root = 'dataset/test'
-val_data_root = 'dataset/kidney/val'
+# Torch-specific
+use_gpu = torch.cuda.is_available()
+device = torch.device('cuda' if use_gpu else 'cpu')
+num_workers = 0
+print_freq = 20
 load_model_path = 'checkpoints/model.pth'
 
-# torch specific parameters
-use_gpu = cuda.is_available()
-num_workers = 41
-print_freq = 20     # print info every N batch
+# Hyper-parameters
+batch_size = 1
+n_epochs = 2
+lr = 0.01
+
+# Architecture-specific
+from models import UNet
+model_name = 'UNet'
+n_classes = 3
+model = UNet(n_classes)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters())
+
+# Data-specific
+project_root = os.getcwd()
+dataset_root = os.path.join(project_root, 'datasets', 'kidney')
+
+from data import kidney
+train_loader = kidney.train_loader
+val_loader = kidney.val_loader
+test_loader = kidney.val_loader

@@ -1,1 +1,1 @@
-from .kidney import KidneyDataset
+from .kidney import *

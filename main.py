@@ -23,7 +23,7 @@ def train(model):
             print('sample label dtype:', sample['label'].type())
 
             prediction = model(sample['image'])
-            loss = criterion(prediction, F.interpolate(sample['label'], prediction.size()[2:], mode='bilinear'))
+            loss = criterion(prediction, sample['label'])
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()

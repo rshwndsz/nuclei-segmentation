@@ -26,6 +26,7 @@ optimizer = optim.Adam(model.parameters())
 # Data-specific
 project_root = os.getcwd()
 dataset_root = os.path.join(project_root, 'datasets', 'kidney')
+results_dir = os.path.join(project_root, 'results')
 
 from data import kidney
 train_loader = kidney.train_loader

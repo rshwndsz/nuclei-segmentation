@@ -1,6 +1,7 @@
 import torch
 import argparse
 import config as cfg
+import torch.nn.functional as F
 
 
 def train(model):
@@ -18,10 +19,11 @@ def train(model):
             print('Mem Cached:', torch.cuda.memory_cached(0))
 
             sample['image'] = sample['image'].to(cfg.device)
-            sample['label'] = sample['label'].to(cfg.device)
+            sample['label'] = sample['label'].type(torch.FloatTensor).to(cfg.device)
+            print('sample label dtype:', sample['label'].type())
 
             prediction = model(sample['image'])
-            loss = criterion(prediction, sample['label'])
+            loss = criterion(prediction, F.interpolate(sample['label'], prediction.size()[2:], mode='bilinear'))
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()

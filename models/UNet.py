@@ -44,11 +44,12 @@ class _EncoderBlock(nn.Module):
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
 
     def forward(self, x):
-        logger.info('_EncoderBlock')
+        logger.info('_EncoderBlock: START')
         x = self.encode(x)
         if self.dropout:
             x = self.dropout(x)
         x = self.pool(x)
+        logger.info('_EncoderBlock: FINISH')
         return x
 
 
@@ -60,13 +61,13 @@ class _DecoderBlock(nn.Module):
             nn.ReLU(inplace=True),
             nn.Conv2d(mid_channels, mid_channels, kernel_size=3),
             nn.ReLU(inplace=True),
-            nn.ConvTranspose2d(mid_channels, out_channels,
-                               kernel_size=2, stride=2)
+            nn.ConvTranspose2d(mid_channels, out_channels, kernel_size=2, stride=2)
         )
 
     def forward(self, x):
-        logger.info('_DecoderBlock')
+        logger.info('_DecoderBlock: START')
         x = self.decode(x)
+        logger.info('_DecoderBlock: FINISH')
         return x
 
 
@@ -90,7 +91,7 @@ class UNet(nn.Module):
             nn.Conv2d(64, 64, kernel_size=3),
             nn.ReLU(inplace=True),
         )
-        self.output = nn.Conv2d(64, n_classes, kernel_size=3)
+        self.output = nn.Conv2d(64, 3, kernel_size=1)
 
     @staticmethod
     def center_crop(layer, target_size):
@@ -113,16 +114,24 @@ class UNet(nn.Module):
         center = self.center(enc3)
         logger.info('After center')
 
-        logger.info('Before crop1')
-        crop1 = F.interpolate(enc3, center.shape[2:], mode='bilinear')
+        crop1 = F.interpolate(enc3, center.size()[2:], mode='bilinear', align_corners=False)
         logger.info('After crop1')
-        dec3 = self.dec2(torch.cat([center, crop1], 1))
+        logger.info('center: {}'.format(center.size()))
+        logger.info('crop1: {}'.format(crop1.size()))
+        dec3 = self.dec3(torch.cat([center, crop1], 1))
         logger.info('After dec3')
-        crop2 = F.interpolate(enc2, dec3.size()[2:], mode='bilinear')
+        crop2 = F.interpolate(enc2, dec3.size()[2:], mode='bilinear', align_corners=False)
         dec2 = self.dec2(torch.cat([dec3, crop2], 1))
-        crop3 = F.interpolate(enc1, dec2.size()[2:], mode='bilinear')
+        crop3 = F.interpolate(enc1, dec2.size()[2:], mode='bilinear', align_corners=False)
         dec1 = self.dec1(torch.cat([dec2, crop3], 1))
 
-        fin = self.final(dec1)
+        logger.info('before final')
+        logger.info('dec1: {}'.format(dec1.size()))
+        crop4 = F.interpolate(inp, dec1.size()[2:], mode='bilinear', align_corners=False)
+        fin = self.final(torch.cat([dec1, crop4], 1))
+        logger.info('after final')
+        logger.info('fin: {}'.format(fin.size()))
         out = self.output(fin)
+        logger.info(f'after out, {out.shape}')
+        print('out: {}'.format(out))
         return out

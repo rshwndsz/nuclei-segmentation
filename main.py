@@ -1,18 +1,34 @@
-# Scientific Python Tools
-import numpy as np
-import matplotlib.pyplot as plt
-
-# PyTorch
-from torch import nn, optim
-from torch.utils.data import DataLoader
-
-# For the CLI
+import torch
 import argparse
-from . import config
+import config as cfg
 
 
-def train():
-    pass
+def train(model):
+    # TODO: Add ability to load from a checkpoint save
+    model.to(cfg.device)
+    optimizer = cfg.optimizer
+    criterion = cfg.criterion
+    train_loader = cfg.train_loader
+
+    for e in range(cfg.n_epochs):
+        print('Epoch {}/{}'.format(e+1, cfg.n_epochs))
+        running_loss = 0
+        for sample in train_loader:
+            print('Mem Used:', torch.cuda.memory_allocated(0))
+            print('Mem Cached:', torch.cuda.memory_cached(0))
+
+            sample['image'] = sample['image'].to(cfg.device)
+            sample['label'] = sample['label'].to(cfg.device)
+
+            prediction = model(sample['image'])
+            loss = criterion(prediction, sample['label'])
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+
+            running_loss += loss.item()
+        else:
+            print('Epoch done! Loss =', running_loss/len(train_loader))
 
 
 def val():
@@ -24,20 +40,12 @@ def test():
 
 
 if __name__ == '__main__':
-    # Configure Model
-    model = config.model
-    if config.load_model_path:
-        model.load(config.load_model_path)
-
-    if config.use_gpu:
-        model.cuda()
-
-    parser = argparse.ArgumentParser(description=f'CLI for {config.model_name}')
+    parser = argparse.ArgumentParser(description=f'CLI for {cfg.model_name}')
     parser.add_argument('--phase', type=str, default='train')
     args = parser.parse_args()
 
     if args.phase == 'train':
-        train()
+        train(cfg.model)
 
     elif args.phase == 'test':
         test()

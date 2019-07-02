@@ -8,7 +8,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-class _ConvBlock(nn.Module):
+class _DoubleConvBlock(nn.Module):
     # TODO: Use this as it is more modular
     def __init__(self, in_channels, out_channels, kernel_size, activation=nn.ReLU(inplace=True)):
         """
@@ -16,9 +16,9 @@ class _ConvBlock(nn.Module):
         :param in_channels: number of input channels
         :param out_channels: number of output channels
         :param kernel_size: size of the kernel
-        :param activation: activation function (F.relu by default)
+        :param activation: activation function (ReLU by default)
         """
-        super(_ConvBlock, self).__init__()
+        super(_DoubleConvBlock, self).__init__()
 
         self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=kernel_size)
         self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size=kernel_size)
@@ -91,7 +91,7 @@ class UNet(nn.Module):
             nn.Conv2d(64, 64, kernel_size=3),
             nn.ReLU(inplace=True),
         )
-        self.output = nn.Conv2d(64, 3, kernel_size=1)
+        self.output = nn.Conv2d(64, n_classes, kernel_size=1)
 
     @staticmethod
     def center_crop(layer, target_size):
@@ -134,4 +134,5 @@ class UNet(nn.Module):
         out = self.output(fin)
         logger.info(f'after out, {out.shape}')
         print('out: {}'.format(out))
+        out_upsampled = F.interpolate(out, x.size()[2:], mode='bilinear', align_corners=False)
         return out

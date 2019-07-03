@@ -10,10 +10,10 @@ num_workers = 4
 print_freq = 20
 val_freq = 1
 resume_from_epoch = 0
-min_val_loss = 10000
+max_val_accuracy = 0
 
 # Hyper-parameters
-batch_size = 4
+batch_size = 1
 n_epochs = 2
 lr = 0.01
 

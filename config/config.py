@@ -8,9 +8,12 @@ use_gpu = torch.cuda.is_available()
 device = torch.device('cuda' if use_gpu else 'cpu')
 num_workers = 4
 print_freq = 20
+val_freq = 1
+resume_from_epoch = 0
+min_val_loss = 10000
 
 # Hyper-parameters
-batch_size = 1
+batch_size = 4
 n_epochs = 2
 lr = 0.01
 
@@ -19,14 +22,16 @@ from models import UNet
 model_name = 'UNet'
 n_classes = 2
 model = UNet(n_classes)
+model = model.to(device)
 criterion = F.cross_entropy
 optimizer = optim.Adam(model.parameters())
 
 # Data-specific
 # TODO: Make project_root platform agnostic
-project_root = "E:\\project_russel\\unet"
+project_root = os.getcwd()
 dataset_root = os.path.join(project_root, 'datasets', 'kidney')
-model_path = os.path.join(project_root, 'checkpoints', 'model.pth')
+model_path = os.path.join(project_root, 'checkpoints', 'model_sanity.pth')
+results_dir = os.path.join(project_root, 'results')
 
 from data import kidney
 train_loader = kidney.train_loader

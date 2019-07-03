@@ -125,3 +125,4 @@ dmypy.json
 
 datasets/
 collect_env.py
+checkpoints/

@@ -2,7 +2,6 @@
 import os
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms as T
-from PIL import Image
 from utils.PIL_helpers import pil_loader
 from config import config as cfg
 
@@ -21,7 +20,7 @@ class KidneyDataset(Dataset):
     def __getitem__(self, idx):
         # TODO: Use OpenCV instead of PIL
         if self.mode == 'test':
-            image = Image.open(self.sample_paths[idx]['image'])
+            image = pil_loader(self.sample_paths[idx]['image'])
             if self.transform is not None:
                 image = self.transform(image)
             return {'image': image, 'label': None}

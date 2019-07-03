@@ -2,7 +2,7 @@
 
 ## Abstract
 
-This is what the model uses & what it does.
+TODO
 
 ## Getting Started
 
@@ -22,13 +22,13 @@ python main.py --phase train
 ### Validation
 
 ```shell
-python main.py --phase validate
+python main.py --phase val
 ```
 
 ### Testing
 
 ```shell
-python main.py --phase test --in_path xxx/xxx.jpg  --out_path ./results/
+python main.py --phase test --in_path xxx.jpg  --out_path results
 ```
 
 ## Results

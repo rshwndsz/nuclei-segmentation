@@ -87,7 +87,7 @@ class UNet(nn.Module):
 
     @staticmethod
     def center_crop(layer, target_size):
-        # TODO: find cleaner implementation
+        # TODO: Try cropping instead of interpolate
         # See: https://discuss.pytorch.org/t/unet-implementation/426
         _, _, layer_height, layer_width = layer.size()
         diff_y = (layer_height - target_size[0]) // 2       # number of missing pixels in x-dim

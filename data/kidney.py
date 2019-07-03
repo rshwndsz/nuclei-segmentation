@@ -3,7 +3,8 @@ import os
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms as T
 from PIL import Image
-import config as cfg
+from utils.PIL_helpers import pil_loader
+from config import config as cfg
 
 
 class KidneyDataset(Dataset):
@@ -18,18 +19,19 @@ class KidneyDataset(Dataset):
         self.transform = transform
 
     def __getitem__(self, idx):
+        # TODO: Use OpenCV instead of PIL
         if self.mode == 'test':
             image = Image.open(self.sample_paths[idx]['image'])
             if self.transform is not None:
                 image = self.transform(image)
             return {'image': image, 'label': None}
         elif self.mode == 'train' or self.mode == 'val':
-            image = Image.open(self.sample_paths[idx]['image'])
-            label = Image.open(self.sample_paths[idx]['label'])
+            image = pil_loader(self.sample_paths[idx]['image'])
+            label = pil_loader(self.sample_paths[idx]['label'], mode='L')
             if self.transform is not None:
                 image = self.transform(image)
                 label = self.transform(label)
-            return {'image': image, 'label': label}
+            return {'image': image, 'label': label[0, :, :]}
 
     def __len__(self):
         return len(self.sample_paths)

@@ -125,6 +125,3 @@ dmypy.json
 
 datasets/
 collect_env.py
-
-# PyCharm
-.idea/

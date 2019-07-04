@@ -140,11 +140,12 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Load values from config file
-    model = cfg.model
+    model = cfg.model.to(cfg.device)
     optimizer = cfg.optimizer
     criterion = cfg.criterion
     resume_from_epoch = cfg.resume_from_epoch
     min_val_loss = cfg.min_val_loss
+    device = cfg.device
 
     if args.load:
         # Load values from checkpoint file

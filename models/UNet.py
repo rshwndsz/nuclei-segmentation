@@ -26,16 +26,18 @@ class _DoubleConvBlock(nn.Module):
 
 
 class _EncoderBlock(nn.Module):
-    def __init__(self, in_channels, out_channels, drop_p=0):
+    def __init__(self, in_channels, out_channels, dropout=False):
         super(_EncoderBlock, self).__init__()
         self.layers = [
             nn.Conv2d(in_channels, out_channels, kernel_size=3),
+            nn.BatchNorm2d(out_channels),
             nn.ReLU(inplace=True),
             nn.Conv2d(out_channels, out_channels, kernel_size=3),
+            nn.BatchNorm2d(out_channels),
             nn.ReLU(inplace=True)
         ]
         self.encode = nn.Sequential(*self.layers)
-        self.dropout = nn.Dropout(p=drop_p) if drop_p else None
+        self.dropout = nn.Dropout(p=0.2) if dropout else None
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
 
     def forward(self, x):
@@ -51,8 +53,10 @@ class _DecoderBlock(nn.Module):
         super(_DecoderBlock, self).__init__()
         self.decode = nn.Sequential(
             nn.Conv2d(in_channels, mid_channels, kernel_size=3),
+            nn.BatchNorm2d(mid_channels),
             nn.ReLU(inplace=True),
             nn.Conv2d(mid_channels, mid_channels, kernel_size=3),
+            nn.BatchNorm2d(mid_channels),
             nn.ReLU(inplace=True),
             nn.ConvTranspose2d(mid_channels, out_channels, kernel_size=2, stride=2)
         )
@@ -65,12 +69,10 @@ class _DecoderBlock(nn.Module):
 class UNet(nn.Module):
     def __init__(self, n_classes):
         super(UNet, self).__init__()
-        # TODO: Add dropout
-        # TODO: Add batch-normalization
         self.input = _EncoderBlock(3, 64)
         self.enc1 = _EncoderBlock(64, 128)
         self.enc2 = _EncoderBlock(128, 256)
-        self.enc3 = _EncoderBlock(256, 512)
+        self.enc3 = _EncoderBlock(256, 512, dropout=True)
 
         self.center = _DecoderBlock(512, 1024, 512)
 
@@ -104,7 +106,6 @@ class UNet(nn.Module):
 
         center = self.center(enc3)
 
-        # TODO: Try cropping instead of interpolate
         crop1 = F.interpolate(enc3, center.size()[2:], mode='bilinear', align_corners=False)
         dec3 = self.dec3(torch.cat([center, crop1], 1))
 

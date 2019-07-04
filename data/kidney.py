@@ -60,6 +60,8 @@ class KidneyDataset(Dataset):
 
 
 # TODO: Add data augmentation
+# TODO: Add color deconvolution
+# TODO: Add color normalization
 train_transforms = T.Compose([T.ToTensor()])
 train_set = KidneyDataset(root_dir=cfg.dataset_root,
                           mode='train',

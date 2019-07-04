@@ -4,33 +4,35 @@ from config import config as cfg
 import logging
 import coloredlogs
 import os
+from tqdm import tqdm
 from torchvision import transforms as T
 
 # Setup colorful logging
 logger = logging.getLogger(__name__)
-coloredlogs.install(level='INFO', logger=logger)
+coloredlogs.install(fmt='%(levelname)s %(message)s',
+                    level='DEBUG',
+                    logger=logger)
 
 
 # noinspection PyShadowingNames
-def train(model, optimizer, criterion, resume_from_epoch=0, max_val_accuracy=0):
+def train(model, optimizer, criterion, resume_from_epoch=0, min_val_loss=1000):
     """
     Train the model
     :param model: Model to be trained
     :param optimizer: Method to compute gradients
     :param criterion: Criterion for computing loss
     :param resume_from_epoch: Resume training from this epoch
-    :param max_val_accuracy: Save models with greater accuracy on validation set
+    :param min_val_loss: Save models with lesser loss on validation set
     """
     model.train()
     train_loader = cfg.train_loader
     for epoch in range(resume_from_epoch, cfg.n_epochs):
         logger.info('TRAINING: Epoch {}/{}'.format(epoch+1, cfg.n_epochs))
         running_loss = 0
-        step = 0
-        for sample in train_loader:
-            step += 1
-            if step % cfg.print_freq == 0:
-                logger.info(f'Image {step}/{len(train_loader)}')
+        pbar = tqdm(total=len(train_loader), desc='Training')
+        for steps, sample in enumerate(train_loader):
+            if (steps + 1) % cfg.print_freq == 0:
+                pbar.update(cfg.print_freq)
 
             sample['image'] = sample['image'].to(cfg.device)
             sample['label'] = sample['label'].type(torch.LongTensor).to(cfg.device)
@@ -41,54 +43,70 @@ def train(model, optimizer, criterion, resume_from_epoch=0, max_val_accuracy=0):
 
             running_loss += loss.item()
         else:
+            pbar.close()
             logger.info(f'Epoch done! Loss = {running_loss/len(train_loader)}')
 
         if epoch % cfg.val_freq == 0:
             logger.info('VALIDATION')
-            val_accuracy = val(model)
-            logger.info(f'Validation accuracy: {val_accuracy}')
-            if val_accuracy > max_val_accuracy:
+            model.eval()
+            val_loss = val(model)
+            model.train()
+            logger.info(f'Validation loss: {val_loss}')
+            if val_loss < min_val_loss:
                 logger.info('Saving model...')
                 try:
                     torch.save({
                         'epoch': epoch,
                         'model_state_dict': model.state_dict(),
                         'optimizer_state_dict': optimizer.state_dict(),
-                        'val_accuracy': val_accuracy
+                        'val_loss': val_loss
                     }, cfg.model_path)
                 except FileNotFoundError as fnf_error:
                     logger.error(f'{fnf_error}')
                 else:
-                    logger.info('Saved 🎉')
-                max_val_accuracy = val_accuracy
+                    logger.info('Saved!')
+                min_val_loss = val_loss
+            else:
+                logger.info('Skipped saving.')
+    else:
+        logger.info('Saving model at end of training...')
+        try:
+            torch.save({
+                'epoch': len(train_loader),
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+            }, cfg.final_model_path)
+        except FileNotFoundError as fnf_error:
+            logger.error(f'{fnf_error}')
+        else:
+            logger.info('Saved!')
 
 
 # noinspection PyShadowingNames
 def val(model):
     """
-    Check model accuracy on validation set.
+    Check model loss on validation set.
     :param model: Model to be tested
-    :return: Validation accuracy
+    :return: Validation loss
     """
-    # TODO: Fix calculation of validation accuracy
-    total_pixels = 0
-    correct_pixels = 0
-    val_accuracy = 0
     model.eval()
+    val_loss = 0
     val_loader = cfg.val_loader
-    for sample in val_loader:
+    pbar = tqdm(total=len(val_loader), desc='Validation')
+    for steps, sample in enumerate(val_loader):
         sample['image'] = sample['image'].to(cfg.device)
         sample['label'] = sample['label'].type(torch.LongTensor).to(cfg.device)
-
         output = model(sample['image'])
-        _, predicted = torch.max(output.data, 1)
-        total_pixels += sample['label'].nelement()
-        correct_pixels += predicted.eq(sample['label'].data).sum().item()
-        val_accuracy = 100 * correct_pixels / total_pixels
+        loss = criterion(output, sample['label'])
+        val_loss += loss.item()
+
+        if steps % cfg.print_freq == 0:
+            pbar.update(cfg.print_freq)
     else:
-        print('Validation Accuracy: {}'.format(val_accuracy))
+        pbar.close()
+        val_loss /= len(val_loader)
         model.train()
-        return val_accuracy
+        return val_loss
 
 
 # noinspection PyShadowingNames
@@ -105,6 +123,7 @@ def test(model):
         prediction = model(sample['image'])
         T.ToPILImage()(prediction).save(os.path.join(cfg.results_dir, 'output.jpeg'))
         print('Prediction saved in results/output.jpeg')
+    model.train()
 
 
 if __name__ == '__main__':
@@ -125,7 +144,7 @@ if __name__ == '__main__':
     optimizer = cfg.optimizer
     criterion = cfg.criterion
     resume_from_epoch = cfg.resume_from_epoch
-    max_val_accuracy = cfg.max_val_accuracy
+    min_val_loss = cfg.min_val_loss
 
     if args.load:
         # Load values from checkpoint file
@@ -133,10 +152,10 @@ if __name__ == '__main__':
         model.load_state_dict(checkpoint['model_state_dict'])
         optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
         resume_from_epoch = checkpoint['epoch']
-        min_val_accuracy = checkpoint['val_accuracy']    # TODO: Add min_val_loss from checkpoint file
+        min_val_loss = checkpoint['val_loss']
 
     if args.phase == 'train':
-        train(model, optimizer, criterion, resume_from_epoch, max_val_accuracy)
+        train(model, optimizer, criterion, resume_from_epoch, min_val_loss)
 
     elif args.phase == 'test':
         test(model)

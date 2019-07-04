@@ -10,12 +10,12 @@ num_workers = 4
 print_freq = 20
 val_freq = 1
 resume_from_epoch = 0
-max_val_accuracy = 0
+min_val_loss = 1000
 
 # Hyper-parameters
 batch_size = 1
-n_epochs = 2
-lr = 0.01
+n_epochs = 10
+lr = 0.003
 
 # Architecture-specific
 from models import UNet
@@ -27,10 +27,10 @@ criterion = F.cross_entropy
 optimizer = optim.Adam(model.parameters())
 
 # Data-specific
-# TODO: Make project_root platform agnostic
 project_root = os.getcwd()
 dataset_root = os.path.join(project_root, 'datasets', 'kidney')
-model_path = os.path.join(project_root, 'checkpoints', 'model_sanity.pth')
+model_path = os.path.join(project_root, 'checkpoints', 'model.pth')
+final_model_path = os.path.join(project_root, 'checkpoints', 'model_final.pth')
 results_dir = os.path.join(project_root, 'results')
 
 from data import kidney

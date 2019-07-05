@@ -1,4 +1,3 @@
-# Custom dataset for the kidney dataset
 import os
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms as T
@@ -59,9 +58,6 @@ class KidneyDataset(Dataset):
         return sample_paths
 
 
-# TODO: Add data augmentation
-# TODO: Add color deconvolution
-# TODO: Add color normalization
 train_transforms = T.Compose([T.ToTensor()])
 train_set = KidneyDataset(root_dir=cfg.dataset_root,
                           mode='train',

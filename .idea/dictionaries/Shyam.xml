@@ -16,6 +16,7 @@
       <w>ronneberger</w>
       <w>unet</w>
       <w>unpadded</w>
+      <w>upconv</w>
       <w>upsampled</w>
     </words>
   </dictionary>

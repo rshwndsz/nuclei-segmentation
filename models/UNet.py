@@ -3,40 +3,26 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-class _DoubleConvBlock(nn.Module):
-    # TODO: Use _DoubleConvBlock as in 'refactor'
-    def __init__(self, in_channels, out_channels, kernel_size, activation=nn.ReLU(inplace=True)):
-        """
-        2 unpadded convolutions each followed by a ReLU.
-        :param in_channels: number of input channels
-        :param out_channels: number of output channels
-        :param kernel_size: size of the kernel
-        :param activation: activation function (ReLU by default)
-        """
-        super(_DoubleConvBlock, self).__init__()
-
-        self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=kernel_size)
-        self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size=kernel_size)
-        self.activation = activation
-
-    def forward(self, x):
-        x = self.activation(self.conv1(x))
-        x = self.activation(self.conv2(x))
-        return x
-
-
 class _EncoderBlock(nn.Module):
     def __init__(self, in_channels, out_channels, dropout=False):
+        """
+        Encoder block of the UNet structure
+
+        Contains 2 Conv-BN-ReLU blocks followed by a max pooling layer
+        Can have dropout for regularization if dropout=True
+        :param in_channels: Number of input channels
+        :param out_channels: Number of output channels
+        :param dropout: If True, dropout is included
+        """
         super(_EncoderBlock, self).__init__()
-        self.layers = [
+        self.encode = nn.Sequential(
             nn.Conv2d(in_channels, out_channels, kernel_size=3),
             nn.BatchNorm2d(out_channels),
             nn.ReLU(inplace=True),
             nn.Conv2d(out_channels, out_channels, kernel_size=3),
             nn.BatchNorm2d(out_channels),
             nn.ReLU(inplace=True)
-        ]
-        self.encode = nn.Sequential(*self.layers)
+        )
         self.dropout = nn.Dropout(p=0.2) if dropout else None
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
 
@@ -50,6 +36,14 @@ class _EncoderBlock(nn.Module):
 
 class _DecoderBlock(nn.Module):
     def __init__(self, in_channels, mid_channels, out_channels):
+        """
+        Decoder block of the UNet Structure
+
+        Contains 2 Conv-BN-ReLU blocks followed by a Transpose convolution
+        :param in_channels: Number of input channels
+        :param mid_channels: Number of intermediate channels
+        :param out_channels: Number of output channels
+        """
         super(_DecoderBlock, self).__init__()
         self.decode = nn.Sequential(
             nn.Conv2d(in_channels, mid_channels, kernel_size=3),
@@ -68,6 +62,12 @@ class _DecoderBlock(nn.Module):
 
 class UNet(nn.Module):
     def __init__(self, n_classes):
+        """
+        Base UNet
+
+        From https://arxiv.org/abs/1505.04597
+        :param n_classes: Number of output classes
+        """
         super(UNet, self).__init__()
         self.input = _EncoderBlock(3, 64)
         self.enc1 = _EncoderBlock(64, 128)
@@ -86,17 +86,6 @@ class UNet(nn.Module):
             nn.ReLU(inplace=True),
         )
         self.output = nn.Conv2d(64, n_classes, kernel_size=1)
-
-    @staticmethod
-    def center_crop(layer, target_size):
-        # TODO: Try cropping instead of interpolate
-        # See: https://discuss.pytorch.org/t/unet-implementation/426
-        _, _, layer_height, layer_width = layer.size()
-        diff_y = (layer_height - target_size[0]) // 2       # number of missing pixels in x-dim
-        diff_x = (layer_width - target_size[1]) // 2        # number of missing pixels in y-dim
-        return layer[
-            :, :, diff_y:(diff_y+target_size[0]), diff_x:(diff_x+target_size[1])
-        ]
 
     def forward(self, x):
         inp = self.input(x)

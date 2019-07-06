@@ -26,6 +26,7 @@ class _UpconvBNReluBlock(nn.Module):
     def __init__(self, in_ch, out_ch, kernel_size):
         """
         Block performing UpConv followed by BN, ReLU
+
         :param in_ch: Number of input channels
         :param out_ch: Number of output channels
         :param kernel_size: Size of filter
@@ -45,6 +46,7 @@ class _DoubleConvBNReluBlock(nn.Module):
     def __init__(self, in_ch, out_ch, kernel_size):
         """
         2 Blocks of successive Conv-BN-ReLU
+
         :param in_ch: Number of input channels
         :param out_ch: Number of output channels
         :param kernel_size: Size of filter
@@ -63,6 +65,7 @@ class _TripleConvBNReluBlock(nn.Module):
     def __init__(self, in_ch, out_ch, kernel_size):
         """
         3 block of Conv-BN-ReLU returning middle, final outputs
+
         :param in_ch: Number of input channels
         :param out_ch: Number of output channels
         :param kernel_size: Size of filter
@@ -105,10 +108,9 @@ class _PyramidPoolingBlock(nn.Module):
 class UNetPPL(nn.Module):
     def __init__(self, n_classes):
         """
-        Implements UNetPPL
+        UNet with Pyramid Pooling Layers(UNetPPL)
 
-        See paper:
-        See https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8472806&tag=1
+        From https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8472806&tag=1
         :param n_classes: Number of classes
         """
         super(UNetPPL, self).__init__()

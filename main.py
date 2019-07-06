@@ -1,11 +1,13 @@
 import torch
 import argparse
-from config import config as cfg
 import logging
 import coloredlogs
 import os
 from tqdm import tqdm
 from torchvision import transforms as T
+
+from config import config as cfg
+from utils import train_helpers
 
 # Setup colorful logging
 logger = logging.getLogger(__name__)
@@ -53,33 +55,12 @@ def train(model, optimizer, criterion, resume_from_epoch=0, min_val_loss=1000):
             model.train()
             logger.info(f'Validation loss: {val_loss}')
             if val_loss < min_val_loss:
-                logger.info('Saving model...')
-                try:
-                    torch.save({
-                        'epoch': epoch,
-                        'model_state_dict': model.state_dict(),
-                        'optimizer_state_dict': optimizer.state_dict(),
-                        'val_loss': val_loss
-                    }, cfg.model_path)
-                except FileNotFoundError as fnf_error:
-                    logger.error(f'{fnf_error}')
-                else:
-                    logger.info('Saved!')
+                train_helpers.save_val_model(model, epoch, optimizer, val_loss, logger)
                 min_val_loss = val_loss
             else:
                 logger.info('Skipped saving.')
     else:
-        logger.info('Saving model at end of training...')
-        try:
-            torch.save({
-                'epoch': len(train_loader),
-                'model_state_dict': model.state_dict(),
-                'optimizer_state_dict': optimizer.state_dict(),
-            }, cfg.final_model_path)
-        except FileNotFoundError as fnf_error:
-            logger.error(f'{fnf_error}')
-        else:
-            logger.info('Saved!')
+        train_helpers.save_end_model(model, optimizer, logger)
 
 
 # noinspection PyShadowingNames

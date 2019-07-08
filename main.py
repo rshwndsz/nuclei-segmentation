@@ -1,13 +1,14 @@
 import torch
+import torchvision.transforms as T
 import argparse
 import logging
 import coloredlogs
 import os
 from tqdm import tqdm
-from torchvision import transforms as T
-
-from config import config as cfg
 from utils import train_helpers
+from config import (config as cfg,
+                    architecture as arch,
+                    data_loaders as dl)
 
 # Setup colorful logging
 logger = logging.getLogger(__name__)
@@ -20,6 +21,7 @@ coloredlogs.install(fmt='%(levelname)s %(message)s',
 def train(model, optimizer, criterion, resume_from_epoch=0, min_val_loss=1000):
     """
     Train the model
+
     :param model: Model to be trained
     :param optimizer: Method to compute gradients
     :param criterion: Criterion for computing loss
@@ -27,7 +29,7 @@ def train(model, optimizer, criterion, resume_from_epoch=0, min_val_loss=1000):
     :param min_val_loss: Save models with lesser loss on validation set
     """
     model.train()
-    train_loader = cfg.train_loader
+    train_loader = dl.train_loader
     for epoch in range(resume_from_epoch, cfg.n_epochs):
         logger.info('TRAINING: Epoch {}/{}'.format(epoch+1, cfg.n_epochs))
         running_loss = 0
@@ -67,12 +69,13 @@ def train(model, optimizer, criterion, resume_from_epoch=0, min_val_loss=1000):
 def val(model):
     """
     Check model loss on validation set.
+
     :param model: Model to be tested
     :return: Validation loss
     """
     model.eval()
     val_loss = 0
-    val_loader = cfg.val_loader
+    val_loader = dl.val_loader
     pbar = tqdm(total=len(val_loader), desc='Validation')
     for steps, sample in enumerate(val_loader):
         sample['image'] = sample['image'].to(cfg.device)
@@ -94,11 +97,12 @@ def val(model):
 def test(model):
     """
     Get segmented image from trained model
+
     :param model: Model generating the mask
     :return: Segmented image
     """
     model.eval()
-    test_loader = cfg.test_loader
+    test_loader = dl.test_loader
     for sample in test_loader:
         sample['image'] = sample['image'].to(cfg.device)
         prediction = model(sample['image'])
@@ -109,7 +113,7 @@ def test(model):
 
 if __name__ == '__main__':
     # CLI
-    parser = argparse.ArgumentParser(description=f'CLI for {cfg.model_name}')
+    parser = argparse.ArgumentParser(description=f'CLI for {arch.model_name}')
     parser.add_argument('--phase',
                         type=str,
                         default='train',
@@ -121,9 +125,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Load values from config file
-    model = cfg.model.to(cfg.device)
-    optimizer = cfg.optimizer
-    criterion = cfg.criterion
+    model = arch.model.to(cfg.device)
+    optimizer = arch.optimizer
+    criterion = arch.criterion
     resume_from_epoch = cfg.resume_from_epoch
     min_val_loss = cfg.min_val_loss
     device = cfg.device
@@ -137,9 +141,11 @@ if __name__ == '__main__':
         min_val_loss = checkpoint['val_loss']
 
     if args.phase == 'train':
+        # Train & periodically validate model
         train(model, optimizer, criterion, resume_from_epoch, min_val_loss)
 
     elif args.phase == 'test':
+        # Test model
         test(model)
 
     else:

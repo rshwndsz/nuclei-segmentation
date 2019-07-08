@@ -12,7 +12,7 @@ def convert_to_optical_densities(rgb, r0, g0, b0):
 
 
 def color_deconvolution(rgb, r0, g0, b0, verbose=False):
-    # See: https://gist.github.com/odebeir/5038467
+    # From https://gist.github.com/odebeir/5038467
     stain_od = np.asarray([[0.18, 0.20, 0.08],
                            [0.01, 0.13, 0.0166],
                            [0.10, 0.21, 0.29]])
@@ -49,5 +49,3 @@ def color_deconvolution(rgb, r0, g0, b0, verbose=False):
     od_max[np.isinf(c[:, :, 2])] = 0
 
     return od_max, c
-
-# TODO: Color Normalization

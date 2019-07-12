@@ -13,12 +13,12 @@ resume_from_epoch = 0
 min_val_loss = 1000
 
 # Hyper-parameters
-batch_size = 1
-n_epochs = 10
-lr = 0.003
+batch_size = 4
+n_epochs = 20
+lr = 1e-3
 
 # Data-specific
-project_root = os.getcwd()
+project_root = '/home/shyam/myProjects/unet/'
 dataset_root = os.path.join(project_root, 'datasets', 'kidney')
 model_path = os.path.join(project_root, 'checkpoints', 'model.pth')
 final_model_path = os.path.join(project_root, 'checkpoints', 'model_final.pth')

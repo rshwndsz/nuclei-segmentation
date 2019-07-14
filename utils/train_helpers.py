@@ -38,7 +38,7 @@ def save_end_model(model, optimizer, logger):
             'epoch': cfg.n_epochs,
             'model_state_dict': model.state_dict(),
             'optimizer_state_dict': optimizer.state_dict(),
-        }, cfg.final_model_path)
+        }, cfg.model_final_path)
 
     except FileNotFoundError as fnf_error:
         logger.error(f'{fnf_error}')

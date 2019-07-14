@@ -1,9 +1,7 @@
 import torch
-import torchvision.transforms as T
 import argparse
 import logging
 import coloredlogs
-import os
 from tqdm import tqdm
 from utils import train_helpers
 from config import (config as cfg,
@@ -94,20 +92,19 @@ def val(model):
 
 
 # noinspection PyShadowingNames
-def test(model):
+def test(model, test_image):
     """
     Get segmented image from trained model
 
     :param model: Model generating the mask
+    :param test_image: Image whose mask is to be generated
     :return: Segmented image
     """
     model.eval()
-    test_loader = dl.test_loader
-    for sample in test_loader:
-        sample['image'] = sample['image'].to(cfg.device)
-        prediction = model(sample['image'])
-        T.ToPILImage()(prediction).save(os.path.join(cfg.results_dir, 'output.jpeg'))
-        print('Prediction saved in results/output.jpeg')
+
+    prediction = model(test_image)
+    y = prediction.squeeze().permute(1, 2, 0).cpu().numpy()
+    logger.info(f'{y}')
     model.train()
 
 
@@ -146,7 +143,9 @@ if __name__ == '__main__':
 
     elif args.phase == 'test':
         # Test model
-        test(model)
+        tl = iter(dl.test_loader)
+        test_image = next(tl)['image']
+        test(model, test_image)
 
     else:
         raise ValueError('Choose one of train/test.')

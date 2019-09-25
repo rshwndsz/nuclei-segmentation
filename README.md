@@ -1,17 +1,20 @@
 # U-Net
 
-## Abstract
-
-TODO
-
 ## Getting Started
 
+Clone the repo
 ```shell
-cd dl-model-template
-conda env create -f unet.yml
+git clone https://github.com/rshwndsz/nuclei-segmentation.git nuclei-segmentation
 ```
 
-Add your data into `dataset/`.
+Create a new conda environment and install required packages.  
+```shell
+cd nuclei-segmentation
+conda env create -f unet_<os_name>.yml
+```
+
+Download the dataset from https://drive.google.com/drive/folders/1LSONlzWx1hMR569Zib1XwDPthnsrqfu5?usp=sharing  
+Add it into `dataset/`.
 
 ### Training
 
@@ -30,11 +33,3 @@ python main.py --phase val
 ```shell
 python main.py --phase test --in_path xxx.jpg  --out_path results
 ```
-
-## Results
-
-TODO
-
-## References
-
-* [U-Net: Convolutional Networks for Biomedical Image Segmentation by Olaf Ronneberger, Philipp Fischer, Thomas Brox](https://arxiv.org/abs/1505.04597)

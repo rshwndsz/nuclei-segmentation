@@ -18,7 +18,9 @@ n_epochs = 20
 lr = 1e-3
 
 # Data-specific
-project_root = '/home/shyam/myProjects/unet/'   # `os.getcwd()` doesn't work in notebooks
+# `os.getcwd()` doesn't work in notebooks
+# project_root = '/home/shyam/myProjects/unet/'
+project_root = '/Users/Russel/myProjects/unet/'
 dataset_root = os.path.join(project_root, 'datasets', 'kidney')
 model_path = os.path.join(project_root, 'checkpoints', 'model.pth')
 model_final_path = os.path.join(project_root, 'checkpoints', 'model_final.pth')

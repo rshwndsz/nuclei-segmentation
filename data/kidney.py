@@ -17,7 +17,6 @@ class KidneyDataset(Dataset):
         self.transform = transform
 
     def __getitem__(self, idx):
-        # TODO: Use OpenCV instead of PIL
         if self.mode == 'test':
             image = pil_loader(self.sample_paths[idx]['image'])
             if self.transform is not None:

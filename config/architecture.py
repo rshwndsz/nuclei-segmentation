@@ -4,7 +4,7 @@ from . import config as cfg
 from models import UNet
 
 
-model_name = 'UNet'
+model_name = 'Base-UNet'
 n_classes = 2
 model = UNet(n_classes).to(cfg.device)
 criterion = F.cross_entropy

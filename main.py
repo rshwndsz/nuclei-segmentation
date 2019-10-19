@@ -18,7 +18,7 @@ coloredlogs.install(fmt='%(levelname)s %(message)s',
 # noinspection PyShadowingNames
 def train(model, optimizer, criterion, resume_from_epoch=0, min_val_loss=1000):
     """
-    Train the model
+    Train model
 
     :param model: Model to be trained
     :param optimizer: Method to compute gradients
@@ -66,7 +66,7 @@ def train(model, optimizer, criterion, resume_from_epoch=0, min_val_loss=1000):
 # noinspection PyShadowingNames
 def val(model):
     """
-    Check model loss on validation set.
+    Validate model
 
     :param model: Model to be tested
     :return: Validation loss

@@ -65,7 +65,7 @@ class UNet(nn.Module):
         """
         Base UNet
 
-        From https://arxiv.org/abs/1505.04597
+        Paper: https://arxiv.org/abs/1505.04597
         :param n_classes: Number of output classes
         """
         super(UNet, self).__init__()

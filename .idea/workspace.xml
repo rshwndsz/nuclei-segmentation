@@ -2,24 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e643ac1-d065-407b-9088-88a28b2baed8" name="Default Changelist" comment="Add accuracy score metric">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Russel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Russel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Shyam.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Shyam.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/unet.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/unet.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/architecture.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/architecture.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/augmentation.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/augmentation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/kidney.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/kidney.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/UNet.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/UNet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/report.tex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/report_references.bib" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_linux.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_macos.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_windows.yml" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -55,11 +39,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1134">
-              <caret line="63" lean-forward="true" selection-start-line="63" selection-end-line="63" />
+            <state relative-caret-position="227">
+              <caret line="125" column="41" selection-start-line="125" selection-start-column="41" selection-end-line="125" selection-end-column="41" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -91,8 +75,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="24" column="42" lean-forward="true" selection-start-line="24" selection-start-column="42" selection-end-line="24" selection-end-column="42" />
+            <state relative-caret-position="486">
+              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -100,7 +84,37 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="417">
+              <caret line="397" column="5" lean-forward="true" selection-start-line="397" selection-start-column="5" selection-end-line="397" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="FIRST">
+              <first_editor relative-caret-position="338">
+                <caret line="26" column="54" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="54" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/data_loaders.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/architecture.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="198">
@@ -162,7 +176,6 @@
         <option value="$PROJECT_DIR$/__init__.py" />
         <option value="$PROJECT_DIR$/collect_env.py" />
         <option value="$PROJECT_DIR$/config.py" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/utils/pil_loader.py" />
         <option value="$PROJECT_DIR$/utils/PIL_helpers.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
@@ -183,11 +196,12 @@
         <option value="$PROJECT_DIR$/visualization.py" />
         <option value="$PROJECT_DIR$/data/postprocessing.py" />
         <option value="$PROJECT_DIR$/models/UNet.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/data/kidney.py" />
         <option value="$PROJECT_DIR$/data/augmentation.py" />
         <option value="$PROJECT_DIR$/config/config.py" />
         <option value="$PROJECT_DIR$/config/architecture.py" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
   </component>
@@ -382,7 +396,7 @@
       <workItem from="1563166397889" duration="24000" />
       <workItem from="1563166723870" duration="2480000" />
       <workItem from="1563183062134" duration="1569000" />
-      <workItem from="1571463229385" duration="810000" />
+      <workItem from="1571463229385" duration="1590000" />
     </task>
     <task id="LOCAL-00001" summary="Add script to output resident tensors">
       <created>1562235281393</created>
@@ -430,7 +444,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="107326000" />
+    <option name="totallyTimeSpent" value="108106000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -445,7 +459,7 @@
     <frame x="0" y="23" width="1280" height="714" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5024728" visible="true" weight="0.15912762" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5024728" visible="true" weight="0.15912762" />
       <window_info id="Structure" order="1" sideWeight="0.4975272" side_tool="true" weight="0.11799253" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -468,30 +482,6 @@
       <window_info anchor="right" id="Run" order="7" weight="0.50747067" />
       <window_info anchor="right" id="Debug" order="8" weight="0.45327604" />
     </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5024728" visible="true" weight="0.1914378" />
-      <window_info id="Structure" order="1" sideWeight="0.4975272" side_tool="true" weight="0.11799253" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32937685" />
-      <window_info anchor="bottom" id="Cvs" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="4" weight="0.32937685" />
-      <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49919224" weight="0.3284553" />
-      <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50080776" side_tool="true" weight="0.3284553" />
-      <window_info anchor="bottom" id="Tail" order="9" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" weight="0.32956383" />
-      <window_info anchor="right" id="Database" order="4" />
-      <window_info anchor="right" id="Python Console" order="5" weight="0.5371567" />
-      <window_info anchor="right" id="Terminal" order="6" weight="0.52584815" />
-      <window_info anchor="right" id="Run" order="7" weight="0.41057128" />
-      <window_info anchor="right" id="Debug" order="8" weight="0.45327604" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -605,7 +595,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/requirements.txt" />
     <entry file="file://$PROJECT_DIR$/utils/helper.py" />
     <entry file="file://$PROJECT_DIR$/utils/make_dataset.py" />
     <entry file="file://$USER_HOME$/Anaconda3/envs/unet/Lib/site-packages/torch/utils/data/dataset.py" />
@@ -619,13 +608,6 @@
     <entry file="file://$PROJECT_DIR$/datasets/kidney/test/labels/17200_2420.png" />
     <entry file="file://$PROJECT_DIR$/datasets/kidney/test/labels/27900_2640.png" />
     <entry file="file://$PROJECT_DIR$/datasets/kidney/test/labels/21200_5400.png" />
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="862">
-          <caret line="128" selection-start-line="128" selection-end-line="128" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Anaconda3/envs/unet/Lib/site-packages/torch/nn/modules/conv.py" />
     <entry file="file://$PROJECT_DIR$/datasets/kidney/test/labels/10100_9800.png" />
     <entry file="file://$PROJECT_DIR$/datasets/kidney/test/images/10100_9800.png" />
@@ -642,16 +624,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/config/data.py" />
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="531">
-            <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/preprocessing.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="850">
@@ -749,13 +721,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/data_loaders.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/results/1.jpg" />
     <entry file="file://$PROJECT_DIR$/metrics/numeric_score.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -804,16 +769,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1134">
-          <caret line="63" lean-forward="true" selection-start-line="63" selection-end-line="63" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/kidney.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="689">
@@ -831,13 +786,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/results/before_post.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/config/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="24" column="42" lean-forward="true" selection-start-line="24" selection-start-column="42" selection-end-line="24" selection-end-column="42" />
+        <state relative-caret-position="486">
+          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="397" column="5" lean-forward="true" selection-start-line="397" selection-start-column="5" selection-end-line="397" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/data_loaders.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
@@ -847,6 +819,26 @@
           <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="338">
+            <caret line="26" column="54" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="54" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="125" column="41" selection-start-line="125" selection-start-column="41" selection-end-line="125" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>

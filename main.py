@@ -116,12 +116,14 @@ if __name__ == '__main__':
                         default='train',
                         help='set phase[train(includes val)/test]')
     parser.add_argument('--load',
-                        type=bool,
-                        default=False,
+                        dest='load',
+                        action='store_true',
                         help='load model from checkpoints/model.pth')
+    parser.set_defaults(load=True)
     args = parser.parse_args()
 
     # Load values from config file
+    # TODO Load from checkpoint if --load
     model = arch.model.to(cfg.device)
     optimizer = arch.optimizer
     criterion = arch.criterion

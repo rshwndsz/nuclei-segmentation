@@ -1,4 +1,4 @@
-# U-Net
+# Computational Histopathology
 
 ## Getting Started
 
@@ -13,8 +13,7 @@ cd nuclei-segmentation
 conda env create -f env_<os_name>.yml
 ```
 
-Download the [dataset](https://drive.google.com/drive/folders/1LSONlzWx1hMR569Zib1XwDPthnsrqfu5?usp=sharing)  
-Add it into `datasets/`.
+Download the [dataset](https://drive.google.com/drive/folders/1LSONlzWx1hMR569Zib1XwDPthnsrqfu5?usp=sharing) into `datasets/`
 
 ### Training & Validation
 

@@ -1,4 +1,4 @@
-# Computational Histopathology
+# Segmentation of H&E stained histopathology images
 
 ## Getting Started
 
